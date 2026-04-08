@@ -44,7 +44,7 @@ const userSchema = new Schema({
         type: String,
         required: [true, "password is required."],
         select: false,
-        minlength: 3,
+        minlength: [8, "password length should be more than 8"]
     },
     refreshToken: {
         type: String
@@ -73,7 +73,7 @@ userSchema.methods.generateAccessToken = function(){
         { 
         _id: this._id,
         email: this.email,
-        username: this.email,
+        username: this.username,
         fullname: this.fullname,
         },
         process.env.ACCESS_TOKEN_SECRET,

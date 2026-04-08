@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import connectDB from './db/index.js'
-import app from './app.js'
+import {app} from './app.js'
 
 dotenv.config()
 
@@ -11,7 +11,7 @@ connectDB()
     });
 
     server.on("error", () => {
-        console.log("server error", err);
+        console.log("server error", error);
         
     })
 })
