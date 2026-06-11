@@ -44,7 +44,7 @@ const userSchema = new Schema({
         type: String,
         required: [true, "password is required."],
         select: false,
-        minlength: [8, "password length should be more than 8"]
+        minlength: [6, "password length should be more than 6"]
     },
     refreshToken: {
         type: String
@@ -56,11 +56,10 @@ const userSchema = new Schema({
 
 
 //hash the password
-userSchema.pre("save", async function(next){
-    if(!this.isModified("password")) return next();
+userSchema.pre("save", async function(){
+    if(!this.isModified("password")) return null;
 
-    this.password = await bcrypt.hash(this.password, 10)
-    next();
+    this.password = await bcrypt.hash(this.password, 10);
 })
 
 //check password
