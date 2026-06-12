@@ -1,7 +1,10 @@
-import apiError  from "../utils/apiError.js"
+// import apiError  from "../utils/apiError.js"
+import ApiError from "../utils/apiError.js";
 
   export const validate = (schema) => (req, res, next) => {
     const result = schema.safeParse(req.body);
+    console.log(result + "validation result");
+    
 
     if(!result.success){
       return res.status(400).json({
@@ -17,13 +20,13 @@ export const validateFile = (req, res, next) => {
   const avatar = req.files?.avatar;
 
   if(!avatar){
-    throw new apiError(400,"Avatar file is required.");
+    throw new ApiError(400,"Avatar file is required.");
   }
 
 
   const maxSize = 2 * 1024 * 1024;
   if(avatar.size > maxSize){
-    throw new apiError(400,"File size should be less than 2MB.");
+    throw new ApiError(400,"File size should be less than 2MB.");
   }
 
   next();
