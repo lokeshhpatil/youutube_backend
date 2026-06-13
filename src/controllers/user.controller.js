@@ -149,8 +149,10 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refreshAccessToken = asyncHandler(async(req, res) => {
-  const incomingRefreshToken = req.cookie.refreshToken || req.body.refreshToken;
-
+  const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
+  console.log("reading incoming refresh token", incomingRefreshToken)
+  console.log(req.cookies);
+console.log(req.body);
   if(!incomingRefreshToken){
     throw new ApiError(400, "unauthorized access")
   }
@@ -160,6 +162,8 @@ const refreshAccessToken = asyncHandler(async(req, res) => {
     incomingRefreshToken,
     process.env.REFRESH_TOKEN_SECRET
   )
+
+  console.log("Decoded token : ", decodedToken)
 
   if(!decodedToken){
     throw new ApiError(400, "Invalid Token.")
